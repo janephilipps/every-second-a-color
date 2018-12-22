@@ -153,23 +153,11 @@ const cssColorKeywords = [
   "yellowgreen",   
 ];
 
-
-
-
-
 class App extends Component {
   render() {
 
-    const styles = cssColorKeywords.map((color) => (
-        { "background-color": `${color}`}
-      ));
+    const styles = cssColorKeywords.map((color) => ({ "background-color": `${color}`}));
 
-    console.log(styles);
-
-    const style = {
-      "background-color": "aliceblue",
-      "display": "inline-block",
-    }
     return (
       <div className="App">
         {cssColorKeywords.map((color, index) => (
