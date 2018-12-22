@@ -2,24 +2,179 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+const cssColorKeywords = [
+  "aliceblue",
+  "antiquewhite",
+  "aqua",
+  "aquamarine",
+  "azure",
+  "beige",
+  "bisque",
+  "black",
+  "blanchedalmond",
+  "blue",
+  "blueviolet",
+  "brown",
+  "burlywood",
+  "cadetblue",
+  "chartreuse",
+  "chocolate",
+  "coral",
+  "cornflowerblue",
+  "cornsilk",
+  "crimson",
+  "cyan",
+  "darkblue",
+  "darkcyan",    
+  "darkgoldenrod",   
+  "darkgray",    
+  "darkgreen",   
+  "darkgrey",    
+  "darkkhaki",   
+  "darkmagenta",   
+  "darkolivegreen",    
+  "darkorange",    
+  "darkorchid",    
+  "darkred",   
+  "darksalmon",    
+  "darkseagreen",    
+  "darkslateblue",   
+  "darkslategray",   
+  "darkslategrey",   
+  "darkturquoise",   
+  "darkviolet",    
+  "deeppink",    
+  "deepskyblue",   
+  "dimgray",   
+  "dimgrey",   
+  "dodgerblue",    
+  "firebrick",   
+  "floralwhite",   
+  "forestgreen",   
+  "fuchsia",
+  "gainsboro",   
+  "ghostwhite",    
+  "gold",    
+  "goldenrod",   
+  "gray",    
+  "green",
+  "greenyellow",   
+  "grey",    
+  "honeydew",    
+  "hotpink",   
+  "indianred",   
+  "indigo",    
+  "ivory",   
+  "khaki",   
+  "lavender",    
+  "lavenderblush",   
+  "lawngreen",   
+  "lemonchiffon",    
+  "lightblue",   
+  "lightcoral",    
+  "lightcyan",   
+  "lightgoldenrodyellow",    
+  "lightgray",   
+  "lightgreen",    
+  "lightgrey",   
+  "lightpink",   
+  "lightsalmon",   
+  "lightseagreen",   
+  "lightskyblue",    
+  "lightslategray",    
+  "lightslategrey",    
+  "lightsteelblue",    
+  "lightyellow",   
+  "lime",
+  "limegreen",   
+  "linen",   
+  "magenta",  
+  "maroon",
+  "mediumaquamarine",    
+  "mediumblue",    
+  "mediumorchid",    
+  "mediumpurple",    
+  "mediumseagreen",    
+  "mediumslateblue",   
+  "mediumspringgreen",   
+  "mediumturquoise",   
+  "mediumvioletred",   
+  "midnightblue",    
+  "mintcream",   
+  "mistyrose",   
+  "moccasin",    
+  "navajowhite",   
+  "navy",
+  "oldlace",   
+  "olive",
+  "olivedrab",   
+  "orange",
+  "orangered",   
+  "orchid",    
+  "palegoldenrod",   
+  "palegreen",   
+  "paleturquoise",   
+  "palevioletred",   
+  "papayawhip",    
+  "peachpuff",   
+  "peru",    
+  "pink",    
+  "plum",    
+  "powderblue",    
+  "purple",
+  "rebeccapurple",
+  "red",
+  "rosybrown",   
+  "royalblue",   
+  "saddlebrown",   
+  "salmon",    
+  "sandybrown",    
+  "seagreen",    
+  "seashell",    
+  "sienna",    
+  "silver",
+  "skyblue",   
+  "slateblue",   
+  "slategray",   
+  "slategrey",   
+  "snow",    
+  "springgreen",   
+  "steelblue",   
+  "tan",   
+  "teal",
+  "thistle",   
+  "tomato",    
+  "turquoise",   
+  "violet",    
+  "wheat",   
+  "white",
+  "whitesmoke",    
+  "yellow",
+  "yellowgreen",   
+];
+
+
+
+
+
 class App extends Component {
   render() {
+
+    const styles = cssColorKeywords.map((color) => (
+        { "background-color": `${color}`}
+      ));
+
+    console.log(styles);
+
+    const style = {
+      "background-color": "aliceblue",
+      "display": "inline-block",
+    }
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        {cssColorKeywords.map((color, index) => (
+          <div class="color" style={styles[index]}></div>
+        ))}
       </div>
     );
   }
