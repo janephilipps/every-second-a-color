@@ -156,13 +156,18 @@ const cssColorKeywords = [
 class App extends Component {
   render() {
 
-    const styles = cssColorKeywords.map((color) => ({ "background-color": `${color}`}));
+    const styles = cssColorKeywords.map((color, index) => {
+      const left = .675 * index;
+      return {
+        backgroundColor: `${color}`,
+        left: `${left}%`,
+        zIndex: index,
+      }
+    });
 
     return (
       <div className="App">
-        {cssColorKeywords.map((color, index) => (
-          <div class="color" style={styles[index]}></div>
-        ))}
+        {cssColorKeywords.map((color, index) => <div class="color" style={styles[index]}></div>)}
       </div>
     );
   }
