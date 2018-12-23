@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 const cssColorKeywords = [
@@ -153,21 +152,43 @@ const cssColorKeywords = [
   "yellowgreen",   
 ];
 
+const styles = cssColorKeywords.map((color, index) => {
+  const left = .675 * index;
+  return {
+    backgroundColor: `${color}`,
+    left: `${left}%`,
+    zIndex: index,
+  }
+});
+
 class App extends Component {
+
+  state = {
+    count: 0,
+  };
+
+  componentDidMount = () => {
+    setInterval(
+      () => {
+        const { count } = this.state;
+        const nextCount = count === cssColorKeywords.length ? 0 : this.state.count + 1;
+        this.setState({count: nextCount});
+      },
+      500
+    );
+  };
+
   render() {
 
-    const styles = cssColorKeywords.map((color, index) => {
-      const left = .675 * index;
-      return {
-        backgroundColor: `${color}`,
-        left: `${left}%`,
-        zIndex: index,
-      }
-    });
+    const { count } = this.state;
+
+    const currentColors = cssColorKeywords.slice(0, count);
 
     return (
       <div className="App">
-        {cssColorKeywords.map((color, index) => <div class="color" style={styles[index]}></div>)}
+        {currentColors.map((color, index) =>
+          <div className="color" style={styles[index]} key={color}></div>
+        )}
       </div>
     );
   }
