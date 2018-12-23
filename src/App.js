@@ -174,7 +174,7 @@ class App extends Component {
         const nextCount = count === cssColorKeywords.length ? 0 : this.state.count + 1;
         this.setState({count: nextCount});
       },
-      500
+      1000
     );
   };
 
