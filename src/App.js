@@ -1,156 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
-
-const cssColorKeywords = [
-  "aliceblue",
-  "antiquewhite",
-  "aqua",
-  "aquamarine",
-  "azure",
-  "beige",
-  "bisque",
-  "black",
-  "blanchedalmond",
-  "blue",
-  "blueviolet",
-  "brown",
-  "burlywood",
-  "cadetblue",
-  "chartreuse",
-  "chocolate",
-  "coral",
-  "cornflowerblue",
-  "cornsilk",
-  "crimson",
-  "cyan",
-  "darkblue",
-  "darkcyan",
-  "darkgoldenrod",
-  "darkgray",
-  "darkgreen",
-  "darkgrey",
-  "darkkhaki",
-  "darkmagenta",
-  "darkolivegreen",
-  "darkorange",
-  "darkorchid",
-  "darkred",
-  "darksalmon",
-  "darkseagreen",
-  "darkslateblue",
-  "darkslategray",
-  "darkslategrey",
-  "darkturquoise",
-  "darkviolet",
-  "deeppink",
-  "deepskyblue",
-  "dimgray",
-  "dimgrey",
-  "dodgerblue",
-  "firebrick",
-  "floralwhite",
-  "forestgreen",
-  "fuchsia",
-  "gainsboro",
-  "ghostwhite",
-  "gold",
-  "goldenrod",
-  "gray",
-  "green",
-  "greenyellow",
-  "grey",
-  "honeydew",
-  "hotpink",
-  "indianred",
-  "indigo",
-  "ivory",
-  "khaki",
-  "lavender",
-  "lavenderblush",
-  "lawngreen",
-  "lemonchiffon",
-  "lightblue",
-  "lightcoral",
-  "lightcyan",
-  "lightgoldenrodyellow",
-  "lightgray",
-  "lightgreen",
-  "lightgrey",
-  "lightpink",
-  "lightsalmon",
-  "lightseagreen",
-  "lightskyblue",
-  "lightslategray",
-  "lightslategrey",
-  "lightsteelblue",
-  "lightyellow",
-  "lime",
-  "limegreen",
-  "linen",
-  "magenta",
-  "maroon",
-  "mediumaquamarine",
-  "mediumblue",
-  "mediumorchid",
-  "mediumpurple",
-  "mediumseagreen",
-  "mediumslateblue",
-  "mediumspringgreen",
-  "mediumturquoise",
-  "mediumvioletred",
-  "midnightblue",
-  "mintcream",
-  "mistyrose",
-  "moccasin",
-  "navajowhite",
-  "navy",
-  "oldlace",
-  "olive",
-  "olivedrab",
-  "orange",
-  "orangered",
-  "orchid",
-  "palegoldenrod",
-  "palegreen",
-  "paleturquoise",
-  "palevioletred",
-  "papayawhip",
-  "peachpuff",
-  "peru",
-  "pink",
-  "plum",
-  "powderblue",
-  "purple",
-  "rebeccapurple",
-  "red",
-  "rosybrown",
-  "royalblue",
-  "saddlebrown",
-  "salmon",
-  "sandybrown",
-  "seagreen",
-  "seashell",
-  "sienna",
-  "silver",
-  "skyblue",
-  "slateblue",
-  "slategray",
-  "slategrey",
-  "snow",
-  "springgreen",
-  "steelblue",
-  "tan",
-  "teal",
-  "thistle",
-  "tomato",
-  "turquoise",
-  "violet",
-  "wheat",
-  "white",
-  "whitesmoke",
-  "yellow",
-  "yellowgreen",
-];
+import Tone from 'tone';
+import { cssColorKeywords, cssColorHexes } from './Colors.js';
+import { notesInOrder } from './Sounds.js';
 
 const styles = cssColorKeywords.map((color, index) => {
   const left = .675 * index;
@@ -165,21 +17,53 @@ class App extends Component {
 
   state = {
     count: 0,
+    oscillators: [],
   };
 
   componentDidMount = () => {
+    // new Tone.Oscillator(220, "sine").toMaster().start();
+    // new Tone.Oscillator(3520, "sine").toMaster().start();
+
     setInterval(
       () => {
         const { count } = this.state;
         const nextCount = count === cssColorKeywords.length ? 0 : this.state.count + 1;
         this.setState({count: nextCount});
+        var hex = cssColorHexes[count];
+        var decimal = parseInt(hex, 16);
+        var numOctaves = 3;
+        var numNotes = notesInOrder.length + 1;
+        var numPitches = numNotes * numOctaves + 1;
+        var pitchIndex = Math.ceil((decimal / 16777215) * (numPitches - 1));
+        var octave = Math.floor(pitchIndex / numNotes);
+        var note = pitchIndex % numNotes;
+        var pitch = notesInOrder[note] * Math.pow(2, octave - 1);
+        console.log({
+          hex: hex,
+          decimal: decimal,
+          pitchIndex: pitchIndex,
+          octave: octave,
+          note: note,
+          pitch: pitch,
+        });
+        var maxOscillators = 2;
+        var curOscs = this.state.oscillators;
+        if (curOscs.length >= maxOscillators) {
+          var removedOsc = curOscs.pop();
+          removedOsc.toMaster().stop();
+        }
+        var newOsc = new Tone.Oscillator(pitch, "sine");
+        curOscs.unshift(newOsc);
+        // newOsc.toMaster().start();
+        this.setState({
+          oscillators: curOscs
+        });
       },
       1000
     );
   };
 
   render() {
-
     const { count } = this.state;
 
     const currentColors = cssColorKeywords.slice(0, count);
