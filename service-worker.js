@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/every-second-a-color/precache-manifest.bdcd09a6a6504e7c4be96c1554beec0f.js"
+  "/every-second-a-color/precache-manifest.1dffb4fd915c4d3b45280f1daa2089c0.js"
 );
 
 workbox.clientsClaim();
